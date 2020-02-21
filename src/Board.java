@@ -51,9 +51,9 @@ public class Board{
             System.out.print(j);
             System.out.print(" ");
             for (int i = 0; i < length; i++){
-                if (!frappes[i][j])
-                    System.out.print(". ");
-                else System.out.print("x ");
+                if (frappes[i][j-1])
+                    System.out.print("x ");
+                else System.out.print(". ");
             }
             System.out.print("\n");
         }
