@@ -65,68 +65,69 @@ public class Board implements IBoard{
     }
 
     @Override
-    public void putShip(AbstractShip ship, int x, int y){
+    public boolean putShip(AbstractShip ship, int x, int y){
         if (!(x<0 || y<0 || x>=length || y>=width)) {
-            boolean no_ship = true;
             int i = 0;
             switch (ship.getOrientation()) {
                 case EAST:
                     if (x - ship.getTaille() >= -1) {
                         //test if a ship has occupied the place
-                        while (i < ship.getTaille()&&no_ship){
-                            if (navires[x-i][y] == 'S') {no_ship = false;}
+                        while (i < ship.getTaille()){
+                            if (navires[x-i][y] == 'S') {return false;}
                             i++;
                         }
                         //if there is no ship
-                        if (no_ship)
                             for (int j = 0; j<ship.getTaille(); j++)
                                 navires[x-j][y] = 'S';
                     }
+                    else return false;
                     break;
 
                 case WEST:
                     if (x + ship.getTaille() <= length) {
                         //test if a ship has occupied the place
-                        while (i < ship.getTaille()&&no_ship){
-                            if (navires[x+i][y] == 'S') {no_ship = false;}
+                        while (i < ship.getTaille()){
+                            if (navires[x+i][y] == 'S') {return false;}
                             i++;
                         }
                         //if there is no ship
-                        if (no_ship)
                             for (int j = 0; j<ship.getTaille(); j++)
                                 navires[x+j][y] = 'S';
                     }
+                    else return false;
                     break;
 
                 case NORTH:
                     if (y + ship.getTaille() <= width) {
                         //test if a ship has occupied the place
-                        while (i < ship.getTaille()&&no_ship){
-                            if (navires[x][y+i] == 'S') {no_ship = false;}
+                        while (i < ship.getTaille()){
+                            if (navires[x][y+i] == 'S') {return false;}
                             i++;
                         }
                         //if there is no ship
-                        if (no_ship)
                             for (int j = 0; j<ship.getTaille(); j++)
                                 navires[x][y+j] = 'S';
                     }
+                    else return false;
                     break;
 
                 case SOUTH:
                     if (y - ship.getTaille() >= -1) {
                         //test if a ship has occupied the place
-                        while (i < ship.getTaille()&&no_ship){
-                            if (navires[x][y-i] == 'S') {no_ship = false;}
+                        while (i < ship.getTaille()){
+                            if (navires[x][y-i] == 'S') {return false;}
                             i++;
                         }
                         //if there is no ship
-                        if (no_ship)
                             for (int j = 0; j<ship.getTaille(); j++)
                                 navires[x][y-j] = 'S';
                     }
+                    else return false;
                     break;
             }
+            return true;
         }
+        else return false;
     }
 
     /**
