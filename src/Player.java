@@ -53,12 +53,14 @@ public class Player {
                     break;
             }
             // TODO put ship at given position
-            if(board.putShip(s,res.x,res.y))
-            // TODO when ship placement successful
+            if(board.putShip(s,res.x,res.y)) {
+                // TODO when ship placement successful
                 ++i;
+                board.print();
+            }
+            else System.err.println("out of the board or one ship has taken this place");
             done = i == 5;
 
-            board.print();
         } while (!done);
     }
 
