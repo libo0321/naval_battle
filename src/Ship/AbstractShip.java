@@ -5,6 +5,7 @@ public abstract class AbstractShip {
     protected String name;
     protected int taille;
     protected Orientation orientation;
+    private int strickCount = 0;
 
     public AbstractShip(String name, Label label, int taille, Orientation orientation) {
         this.name = name;
@@ -28,6 +29,10 @@ public abstract class AbstractShip {
     public int getTaille() {
         return taille;
     }
+
+    public void addStrike() { strickCount++; }
+
+    public boolean isSunk() { return strickCount == taille; }
 
 
     /* Mutateurs */

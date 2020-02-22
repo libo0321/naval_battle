@@ -1,0 +1,30 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
+import Ship.*;
+
+public class ShipState{
+    private AbstractShip ship_here;
+    private boolean struck;
+
+    public ShipState(){
+        ship_here = null;
+    }
+
+    public void addStrick() { struck = true; }
+
+    public void setShip(AbstractShip ship) { ship_here = ship;}
+
+    public boolean isStruck() { return struck; }
+
+    @Override
+    public String toString() {
+        if (struck) return ColorUtil.colorize("Ship label : "+ship_here.getLabel(), ColorUtil.Color.RED);
+        else return "Ship label : "+ship_here.getLabel();
+    }
+
+    public boolean isSunk() { return ship_here.isSunk(); }
+
+    public AbstractShip getShip() { return ship_here; }
+
+}

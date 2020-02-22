@@ -1,6 +1,7 @@
 import java.util.NoSuchElementException;
 
 public enum Hit {
+    NOT(0,"not tried"),
     MISS(-1, "manqué"),
     STIKE(-2, "touché"),
     DESTROYER(2, "destroyer"),

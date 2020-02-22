@@ -5,8 +5,8 @@ import Ship.*;
 
 public class Board implements IBoard{
     private String name;
-    private char[][] navires;
-    private boolean[][] frappes;
+    private ShipState[][] navires;
+    private Hit[][] frappes;
     private int length;
     private int width;
 
@@ -14,15 +14,16 @@ public class Board implements IBoard{
         this.name = name;
         this.length = length;
         this.width = width;
-        navires = new char[length][width];
+        navires = new ShipState[length][width];
         for (int i=0; i< length; i++)
             for (int j=0; j<width; j++)
-                navires[i][j] = '.';
+                navires[i][j] = new ShipState();
 
-        frappes = new boolean[length][width];
+        frappes = new Hit[length][width];
         for (int i=0; i< length; i++)
             for (int j=0; j<width; j++)
-                frappes[i][j] = false;
+                frappes[i][j] = Hit.NOT;
+
     }
 
     public Board(String name){
@@ -52,16 +53,17 @@ public class Board implements IBoard{
 
     @Override
     public boolean hasShip(int x, int y){
-        if (navires[x][y] != '.') return true;
+        if (navires[x][y].getShip() != null) return true;
         else return false;
     }
 
     public void setHit(boolean hit, int x, int y){
-        frappes[x][y] = hit;
+        if(hit) frappes[x][y] = Hit.STIKE;
     }
 
-    public Boolean getHit(int x, int y){
-        return frappes[x][y];
+    public boolean getHit(int x, int y){
+        if (frappes[x][y] == Hit.MISS) return false;
+        else return true;
     }
 
     @Override
@@ -73,12 +75,12 @@ public class Board implements IBoard{
                     if (x - ship.getTaille() >= -1) {
                         //test if a ship has occupied the place
                         while (i < ship.getTaille()){
-                            if (navires[x-i][y] == 'S') {return false;}
+                            if (navires[x-i][y].getShip() != (AbstractShip)null ) {return false;}
                             i++;
                         }
                         //if there is no ship
                             for (int j = 0; j<ship.getTaille(); j++)
-                                navires[x-j][y] = 'S';
+                                navires[x-j][y].setShip(ship);
                     }
                     else return false;
                     break;
@@ -87,12 +89,12 @@ public class Board implements IBoard{
                     if (x + ship.getTaille() <= length) {
                         //test if a ship has occupied the place
                         while (i < ship.getTaille()){
-                            if (navires[x+i][y] == 'S') {return false;}
+                            if (navires[x+i][y].getShip() !=(AbstractShip)null ) {return false;}
                             i++;
                         }
                         //if there is no ship
                             for (int j = 0; j<ship.getTaille(); j++)
-                                navires[x+j][y] = 'S';
+                                navires[x+j][y].setShip(ship);
                     }
                     else return false;
                     break;
@@ -101,12 +103,12 @@ public class Board implements IBoard{
                     if (y + ship.getTaille() <= width) {
                         //test if a ship has occupied the place
                         while (i < ship.getTaille()){
-                            if (navires[x][y+i] == 'S') {return false;}
+                            if (navires[x][y+i].getShip() !=(AbstractShip)null ) {return false;}
                             i++;
                         }
                         //if there is no ship
                             for (int j = 0; j<ship.getTaille(); j++)
-                                navires[x][y+j] = 'S';
+                                navires[x][y+j].setShip(ship);
                     }
                     else return false;
                     break;
@@ -115,12 +117,12 @@ public class Board implements IBoard{
                     if (y - ship.getTaille() >= -1) {
                         //test if a ship has occupied the place
                         while (i < ship.getTaille()){
-                            if (navires[x][y-i] == 'S') {return false;}
+                            if (navires[x][y-i].getShip() !=(AbstractShip)null ) {return false;}
                             i++;
                         }
                         //if there is no ship
                             for (int j = 0; j<ship.getTaille(); j++)
-                                navires[x][y-j] = 'S';
+                                navires[x][y-j].setShip(ship);
                     }
                     else return false;
                     break;
@@ -148,7 +150,9 @@ public class Board implements IBoard{
             else System.out.print(" ");
 
             for (int i = 0; i < length; i++){
-                System.out.print(navires[i][j-1]+" ");
+                if(navires[i][j-1].getShip() == null)
+                    System.out.print(". ");
+                else System.out.print("S ");
             }
             System.out.print("\n");
         }
@@ -165,9 +169,16 @@ public class Board implements IBoard{
             else System.out.print(" ");
 
             for (int i = 0; i < length; i++){
-                if (frappes[i][j-1])
-                    System.out.print("x ");
-                else System.out.print(". ");
+                switch (frappes[i][j-1]) {
+                    case MISS:
+                        System.out.print("X ");
+                        break;
+                    case NOT:
+                        System.out.print(". ");
+                        break;
+                    default:
+                        System.out.print(ColorUtil.colorize("X ", ColorUtil.Color.RED));
+                }
             }
             System.out.print("\n");
         }
