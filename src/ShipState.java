@@ -11,7 +11,12 @@ public class ShipState{
         ship_here = null;
     }
 
-    public void addStrick() { struck = true; }
+    public void addStrick() {
+        if (!struck) {
+            struck = true;
+            ship_here.addStrike();
+        }
+    }
 
     public void setShip(AbstractShip ship) { ship_here = ship;}
 
