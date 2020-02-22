@@ -10,9 +10,11 @@ public class TestBoard{
         Submarine s = new Submarine("ji",4,Orientation.EAST);
         Carrier c = new Carrier("ca",5, Orientation.NORTH);
         Carrier d = new Carrier("ca",5, Orientation.SOUTH);
+
         board.putShip(s,5,6);
         board.putShip(c,5,5);
         board.putShip(d,5,5);
+        board.setHit(true , 5,5);
         board.print();
 
     }

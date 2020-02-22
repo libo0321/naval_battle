@@ -52,18 +52,16 @@ public class Board implements IBoard{
 
     @Override
     public boolean hasShip(int x, int y){
-        if (navires[x][y] == 'S') return true;
+        if (navires[x][y] != '.') return true;
         else return false;
     }
 
     public void setHit(boolean hit, int x, int y){
-        if(hit) frappes[x][y] = true;
-        else frappes[x][y] = false;
+        frappes[x][y] = hit;
     }
 
     public Boolean getHit(int x, int y){
-        if(hasShip(x,y)) return true;
-        else return false;
+        return frappes[x][y];
     }
 
     @Override
