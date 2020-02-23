@@ -1,13 +1,12 @@
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
+
 import Ship.*;
 
 public class TestBoard{
     public static void main(String [] args) {
-        Board board = new Board("Test",11,13);
-        Board oppoB = new Board("oppen",11,13);
+        Board board = new Board("Test",13);
+        Board oppoB = new Board("oppen",13);
         Submarine s = new Submarine("ji",Orientation.EAST);
         Carrier c = new Carrier("ca", Orientation.NORTH);
         Carrier d = new Carrier("ca", Orientation.SOUTH);

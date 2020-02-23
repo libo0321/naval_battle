@@ -1,50 +1,41 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
+
 import Ship.*;
 
 public class Board implements IBoard{
     private String name;
     private ShipState[][] navires;
     private Hit[][] frappes;
-    private int length;
-    private int width;
+    private int size;
+    //private int width;
 
-    public Board(String name, int length, int width) {
+    public Board(String name, int size) {
         this.name = name;
-        this.length = length;
-        this.width = width;
-        navires = new ShipState[length][width];
-        for (int i=0; i< length; i++)
-            for (int j=0; j<width; j++)
+        this.size = size;
+        navires = new ShipState[size][size];
+        for (int i=0; i< size; i++)
+            for (int j=0; j<size; j++)
                 navires[i][j] = new ShipState();
 
-        frappes = new Hit[length][width];
-        for (int i=0; i< length; i++)
-            for (int j=0; j<width; j++)
+        frappes = new Hit[size][size];
+        for (int i=0; i< size; i++)
+            for (int j=0; j<size; j++)
                 frappes[i][j] = Hit.NOT;
 
     }
 
-    public boolean in_map (int x, int y) {return !(x<0 || y<0 || x>=length || y>=width);}
+    public boolean in_map (int x, int y) {return !(x<0 || y<0 || x>=size || y>=size);}
 
     public Board(String name){
-        this(name, 10, 10);
+        this(name, 10);
     }
 
     public String getName() {
         return name;
     }
 
-    public int getLength() {
-        return length;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setMName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -52,13 +43,13 @@ public class Board implements IBoard{
         if(hit) frappes[x][y] = Hit.STIKE;
     }
 
-    public boolean getHit(int x, int y){
-        return frappes[x][y] != Hit.MISS;
+    public Hit getHit(int x, int y){
+        return frappes[x][y];
     }
 
     @Override
     public int getSize() {
-        return width * length;
+        return size;
     }
 
     @Override
@@ -75,24 +66,24 @@ public class Board implements IBoard{
                 if (navires[x][y].isSunk()){ //if the ship is destroyed, return the label of the ship
                     Hit hit_label = Hit.fromInt(navires[x][y].getShip().getLength());
                     frappes[x][y] = hit_label;
-                    print();
+                    //print();
                     System.out.println(hit_label.toString()+" destroyed !" );
                     return hit_label;
                 }
                 else {
                     frappes[x][y] = Hit.STIKE;
-                    print();
+                    //print();
                     return Hit.STIKE;
                 }
             }
             else {
                 frappes[x][y] = Hit.MISS;
-                print();
+                //print();
                 return Hit.MISS;
             }
         }
         else {
-            print();
+            //print();
             return null;
         }
     }
@@ -117,7 +108,7 @@ public class Board implements IBoard{
                     break;
 
                 case WEST:
-                    if (x + ship.getLength() <= length) {
+                    if (x + ship.getLength() <= size) {
                         //test if a ship has occupied the place
                         while (i < ship.getLength()){
                             if (navires[x+i][y].getShip() !=(AbstractShip)null ) {return false;}
@@ -131,7 +122,7 @@ public class Board implements IBoard{
                     break;
 
                 case NORTH:
-                    if (y + ship.getLength() <= width) {
+                    if (y + ship.getLength() <= size) {
                         //test if a ship has occupied the place
                         while (i < ship.getLength()){
                             if (navires[x][y+i].getShip() !=(AbstractShip)null ) {return false;}
@@ -170,17 +161,17 @@ public class Board implements IBoard{
         char begin_letter='A';
         System.out.println("Navires : " );
         System.out.print("  ");
-        for (int i=(int)begin_letter; i<(int)begin_letter+length; i++){
+        for (int i=(int)begin_letter; i<(int)begin_letter+size; i++){
             System.out.print(" "+(char)i);
         }
         System.out.print("\n");
-        for (int j = 1; j<=width; j++){
+        for (int j = 1; j<=size; j++){
             System.out.print(j);
 
             if (j<10) System.out.print("  "); //make sure the table is aligned
             else System.out.print(" ");
 
-            for (int i = 0; i < length; i++){
+            for (int i = 0; i < size; i++){
                 if(navires[i][j-1].getShip() == null)
                     System.out.print(". ");
                 else System.out.print("S ");
@@ -189,17 +180,17 @@ public class Board implements IBoard{
         }
         System.out.println("Frappes : " );
         System.out.print("  ");
-        for (int i=(int)begin_letter; i<(int)begin_letter+length; i++){
+        for (int i=(int)begin_letter; i<(int)begin_letter+size; i++){
             System.out.print(" "+(char)i);
         }
         System.out.print("\n");
-        for (int j = 1; j<=width; j++){
+        for (int j = 1; j<=size; j++){
             System.out.print(j);
 
             if (j<10) System.out.print("  "); //make sure the table is aligned
             else System.out.print(" ");
 
-            for (int i = 0; i < length; i++){
+            for (int i = 0; i < size; i++){
                 switch (frappes[i][j-1]) {
                     case MISS:
                         System.out.print("X ");

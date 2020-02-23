@@ -74,7 +74,7 @@ public class Player {
             // TODO call sendHit on this.opponentBoard
             hit = opponentBoard.sendHit(hitInput.x, hitInput.y);
             // TODO : Game expects sendHit to return BOTH hit result & hit coords.
-            // return hit is obvious. But how to return coords at the same time ?
+            // to return coords, we use coords as parametre
             int i = 0;
             coords[i] = hitInput.x;
             coords[i+1] = hitInput.y;
