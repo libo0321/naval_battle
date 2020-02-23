@@ -26,6 +26,8 @@ public class Board implements IBoard{
 
     }
 
+    public boolean in_map (int x, int y) {return !(x<0 || y<0 || x>=length || y>=width);}
+
     public Board(String name){
         this(name, 10, 10);
     }
@@ -46,82 +48,111 @@ public class Board implements IBoard{
         this.name = name;
     }
 
+    public void setHit(boolean hit, int x, int y){
+        if(hit) frappes[x][y] = Hit.STIKE;
+    }
+
+    public boolean getHit(int x, int y){
+        return frappes[x][y] != Hit.MISS;
+    }
+
     @Override
     public int getSize() {
         return width * length;
     }
 
     @Override
-    public boolean hasShip(int x, int y){
-        if (navires[x][y].getShip() != null) return true;
-        else return false;
+    public boolean hasShip(int x, int y) {
+        return navires[x][y].getShip() != null;
     }
 
-    public void setHit(boolean hit, int x, int y){
-        if(hit) frappes[x][y] = Hit.STIKE;
-    }
-
-    public boolean getHit(int x, int y){
-        if (frappes[x][y] == Hit.MISS) return false;
-        else return true;
+    @Override
+    public Hit sendHit (int x, int y){
+        if (in_map(x, y)) {
+            if (hasShip(x, y)) {
+                /**since addStrick() can prevent attack two times, we can call this function directly**/
+                navires[x][y].addStrick();
+                if (navires[x][y].isSunk()){ //if the ship is destroyed, return the label of the ship
+                    Hit hit_label = Hit.fromInt(navires[x][y].getShip().getLength());
+                    frappes[x][y] = hit_label;
+                    print();
+                    System.out.println(hit_label.toString()+" destroyed !" );
+                    return hit_label;
+                }
+                else {
+                    frappes[x][y] = Hit.STIKE;
+                    print();
+                    return Hit.STIKE;
+                }
+            }
+            else {
+                frappes[x][y] = Hit.MISS;
+                print();
+                return Hit.MISS;
+            }
+        }
+        else {
+            print();
+            return null;
+        }
     }
 
     @Override
     public boolean putShip(AbstractShip ship, int x, int y){
-        if (!(x<0 || y<0 || x>=length || y>=width)) {
+        if (in_map(x, y)) {
             int i = 0;
             switch (ship.getOrientation()) {
                 case EAST:
-                    if (x - ship.getTaille() >= -1) {
+                    if (x - ship.getLength() >= -1) {
                         //test if a ship has occupied the place
-                        while (i < ship.getTaille()){
+                        while (i < ship.getLength()){
                             if (navires[x-i][y].getShip() != (AbstractShip)null ) {return false;}
                             i++;
                         }
                         //if there is no ship
-                            for (int j = 0; j<ship.getTaille(); j++)
+                            for (int j = 0; j<ship.getLength(); j++)
                                 navires[x-j][y].setShip(ship);
                     }
                     else return false;
                     break;
 
                 case WEST:
-                    if (x + ship.getTaille() <= length) {
+                    if (x + ship.getLength() <= length) {
                         //test if a ship has occupied the place
-                        while (i < ship.getTaille()){
+                        while (i < ship.getLength()){
                             if (navires[x+i][y].getShip() !=(AbstractShip)null ) {return false;}
                             i++;
                         }
                         //if there is no ship
-                            for (int j = 0; j<ship.getTaille(); j++)
+                            for (int j = 0; j<ship.getLength(); j++)
                                 navires[x+j][y].setShip(ship);
                     }
                     else return false;
                     break;
 
                 case NORTH:
-                    if (y + ship.getTaille() <= width) {
+                    if (y + ship.getLength() <= width) {
                         //test if a ship has occupied the place
-                        while (i < ship.getTaille()){
+                        while (i < ship.getLength()){
                             if (navires[x][y+i].getShip() !=(AbstractShip)null ) {return false;}
                             i++;
                         }
                         //if there is no ship
-                            for (int j = 0; j<ship.getTaille(); j++)
+                            for (int j = 0; j<ship.getLength(); j++)
                                 navires[x][y+j].setShip(ship);
                     }
                     else return false;
                     break;
 
                 case SOUTH:
-                    if (y - ship.getTaille() >= -1) {
+                    if (y - ship.getLength() >= -1) {
                         //test if a ship has occupied the place
-                        while (i < ship.getTaille()){
+                        while (i < ship.getLength()){
                             if (navires[x][y-i].getShip() !=(AbstractShip)null ) {return false;}
                             i++;
                         }
                         //if there is no ship
-                            for (int j = 0; j<ship.getTaille(); j++)
+                            for (int j = 0; j<ship.getLength(); j++)
                                 navires[x][y-j].setShip(ship);
                     }
                     else return false;

@@ -12,7 +12,7 @@ public class ShipState{
     }
 
     public void addStrick() {
-        if (!struck) {
+        if (!struck) { //prevent attack at the same position two times
             struck = true;
             ship_here.addStrike();
         }

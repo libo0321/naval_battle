@@ -8,11 +8,11 @@ public class TestBoard{
     public static void main(String [] args) {
         Board board = new Board("Test",11,13);
         Board oppoB = new Board("oppen",11,13);
-        Submarine s = new Submarine("ji",4,Orientation.EAST);
-        Carrier c = new Carrier("ca",5, Orientation.NORTH);
-        Carrier d = new Carrier("ca",5, Orientation.SOUTH);
-        Battleship b = new Battleship("bat",3,Orientation.WEST);
-        Destroyer d2 =new Destroyer("des",2,Orientation.EAST);
+        Submarine s = new Submarine("ji",Orientation.EAST);
+        Carrier c = new Carrier("ca", Orientation.NORTH);
+        Carrier d = new Carrier("ca", Orientation.SOUTH);
+        Battleship b = new Battleship("bat",Orientation.WEST);
+        Destroyer d2 =new Destroyer("des",Orientation.EAST);
         List<AbstractShip> ships = new ArrayList<AbstractShip>();
         ships.add(s);
         ships.add(c);
@@ -28,6 +28,18 @@ public class TestBoard{
         //board.print();
         Player p1 = new Player(board, oppoB, ships);
         p1.putShips();
+        System.out.println(board.sendHit(0,2));
+        System.out.println(board.sendHit(0,2));
+        System.out.println(board.sendHit(1,2));
+        System.out.println(board.sendHit(2,2));
+        System.out.println(board.sendHit(5,6));
+        System.out.println(board.sendHit(3,4));
+        System.out.println(board.sendHit(10,2));
+        int []cord = new int[10];
+        p1.sendHit(cord);
+        //System.out.println(cord[0]);
+        //System.out.println(cord[1]);
+        //board.print();
         //p1.ships[0] = s;
 
 

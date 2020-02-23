@@ -3,14 +3,14 @@ package Ship;
 public abstract class AbstractShip {
     protected Label label;
     protected String name;
-    protected int taille;
+    protected int length;
     protected Orientation orientation;
     private int strickCount = 0;
 
     public AbstractShip(String name, Label label, int taille, Orientation orientation) {
         this.name = name;
         this.label = label;
-        this.taille = taille;
+        this.length = taille;
         this.orientation = orientation;
     }
     /* Accesseurs */
@@ -26,13 +26,13 @@ public abstract class AbstractShip {
         return name;
     }
 
-    public int getTaille() {
-        return taille;
+    public int getLength() {
+        return length;
     }
 
     public void addStrike() { strickCount++; }
 
-    public boolean isSunk() { return strickCount == taille; }
+    public boolean isSunk() { return strickCount == length; }
 
 
     /* Mutateurs */
