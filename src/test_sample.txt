@@ -1,5 +1,5 @@
 A3 w
-f10 s
+f6 s
 e5 e
 J2 n
-d8 s
+d8 w

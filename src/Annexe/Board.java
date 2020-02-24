@@ -1,3 +1,5 @@
+
+package Annexe;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,24 +68,24 @@ public class Board implements IBoard{
                 if (navires[x][y].isSunk()){ //if the ship is destroyed, return the label of the ship
                     Hit hit_label = Hit.fromInt(navires[x][y].getShip().getLength());
                     frappes[x][y] = hit_label;
-                    print();
+                    //print();
                     System.out.println(hit_label.toString()+" destroyed !" );
                     return hit_label;
                 }
                 else {
                     frappes[x][y] = Hit.STIKE;
-                    print();
+                    //print();
                     return Hit.STIKE;
                 }
             }
             else {
                 frappes[x][y] = Hit.MISS;
-                print();
+                //print();
                 return Hit.MISS;
             }
         }
         else {
-            print();
+            //print();
             return null;
         }
     }

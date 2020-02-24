@@ -1,3 +1,4 @@
+package Annexe;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,8 +45,8 @@ public class Game {
             player1 = new Player(b1, b2, ships);
             player2 = new AIPlayer(b2, b1, ships);
 
+            System.out.println(name);
             b1.print();
-            b2.print();
             // place player ships
             player1.putShips();
             player2.putShips();

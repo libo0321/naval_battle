@@ -1,3 +1,4 @@
+package Annexe;
 import Ship.*;
 
 public class ShipState{

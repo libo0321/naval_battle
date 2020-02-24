@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
-
+import Annexe.*;
 import Ship.*;
 
 public class TestBoard{
