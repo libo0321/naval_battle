@@ -27,6 +27,7 @@ public class TestBoard{
         //board.print();
         Player p1 = new Player(board, oppoB, ships);
         p1.putShips();
+        /*
         System.out.println(board.sendHit(0,2));
         System.out.println(board.sendHit(0,2));
         System.out.println(board.sendHit(1,2));
@@ -34,6 +35,8 @@ public class TestBoard{
         System.out.println(board.sendHit(5,6));
         System.out.println(board.sendHit(3,4));
         System.out.println(board.sendHit(10,2));
+        */
+
         int []cord = new int[10];
         p1.sendHit(cord);
         //System.out.println(cord[0]);
